@@ -3,6 +3,8 @@ const debug = require('gulp-debug');
 const clean = require('gulp-clean');
 const rename = require('gulp-rename');
 const zip = require('gulp-zip');
+const aws = require("aws-sdk");
+const fs = require('fs');
 
 const cleanDist = gulp.series(() => deleteFiles("./dist/**"));
 
@@ -20,6 +22,30 @@ function zipNewMatchEventHandler() {
         .pipe(zip("kalah-api-lambda.zip"))
         .pipe(debug())
         .pipe(gulp.dest('./dist'));
+}
+
+function deployLambda(cb) {
+    aws.config.region = 'us-east-2';
+    const lambda = new aws.Lambda();
+    const functionName = 'kalah-api';
+
+    const zipFile = fs.readFileSync('./dist/kalah-api-lambda.zip');
+    lambda.updateFunctionCode({
+            FunctionName: functionName, 
+            ZipFile: zipFile
+        },
+        (err, data) => {
+            if (err) {
+                if (err.statusCode === 404) {
+                    const msg = `Unable to find lambda function ${functionName}. Verify the lambda function name and AWS region are correct.`;
+                    console.error(msg);
+                }
+                else {
+                    console.error('AWS API request failed. Check your AWS credentials and permissions.');
+                }
+            }
+        });
+    cb();
 }
   
 function renameFile(file, newName) {
@@ -57,3 +83,4 @@ exports.default = gulp.series(packageNewMatch);
 exports.cleanDist = cleanDist;
 exports.copyNewMatchEventHandlerFiles = copyNewMatchEventHandlerFiles;
 exports.zipNewMatchEventHandler = zipNewMatchEventHandler;
+exports.deploy = deployLambda;
