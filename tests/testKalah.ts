@@ -1,5 +1,5 @@
-import { MatchRepository } from "../src/util/matchRepository";
-import { MockDataStore } from "../src/mocks/mockDataStore";
+import MatchRepository from "../src/util/matchRepository";
+import MockDataStore from "../src/mocks/mockDataStore";
 
 async function testAsync()
 {

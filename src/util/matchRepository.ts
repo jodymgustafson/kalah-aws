@@ -15,7 +15,7 @@ const DEFAULT_STATE: IGameState = {
     score2: 0
 }
 
-export class MatchRepository
+export default class MatchRepository
 {
     constructor(private dataStore: IDataStore)
     {

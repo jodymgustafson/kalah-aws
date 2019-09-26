@@ -1,6 +1,6 @@
 import { IMatchInfo, IGameState, IDataStore } from "../interfaces/dataStore";
 
-export class MockDataStore implements IDataStore
+export default class MockDataStore implements IDataStore
 {
     private store = new Map<string, IMatchInfo>();
 

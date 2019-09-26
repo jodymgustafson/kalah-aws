@@ -1,9 +1,9 @@
 import { Context, APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda";
-import { DynamoDbDataStore } from "../aws/dynamoDbDataStore";
-import { MatchRepository } from "../util/matchRepository";
+import DynamoDbDataStore from "../aws/dynamoDbDataStore";
+import MatchRepository from "../util/matchRepository";
 import { success, failure } from "../util/responseLib";
 
-export async function playBinHandler(event: APIGatewayEvent, context: Context): Promise<APIGatewayProxyResult>
+export default async function playBinHandler(event: APIGatewayEvent, context: Context): Promise<APIGatewayProxyResult>
 {
     const matchId = event.pathParameters["matchId"];
     const bin = parseInt(event.pathParameters["bin"]);
@@ -23,4 +23,3 @@ export async function playBinHandler(event: APIGatewayEvent, context: Context): 
         return failure(errorMessage);
     }
 }
-

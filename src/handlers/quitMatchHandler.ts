@@ -1,9 +1,9 @@
 import { Context, APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda";
-import { DynamoDbDataStore } from "../aws/dynamoDbDataStore";
-import { MatchRepository } from "../util/matchRepository";
+import DynamoDbDataStore from "../aws/dynamoDbDataStore";
+import MatchRepository from "../util/matchRepository";
 import { success, failure } from "../util/responseLib";
 
-export async function quitMatchHandler(event: APIGatewayEvent, context: Context): Promise<APIGatewayProxyResult>
+export default async function quitMatchHandler(event: APIGatewayEvent, context: Context): Promise<APIGatewayProxyResult>
 {
     const matchId = event.pathParameters["matchId"];
     console.log("Match id: ", matchId);
@@ -19,4 +19,3 @@ export async function quitMatchHandler(event: APIGatewayEvent, context: Context)
         return failure();
     }
 }
-

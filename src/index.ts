@@ -1,10 +1,10 @@
 import { Context, APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda";
-import { newMatchHandler } from "./handlers/newMatchHandler";
-import { resetMatchHandler } from "./handlers/resetMatchhandler";
-import { quitMatchHandler } from "./handlers/quitMatchHandler";
-import { playBinHandler } from "./handlers/playBinHandler";
-import { matchStateHandler } from "./handlers/matchStateHandler";
-import { adminInfoHandler } from "./handlers/adminInfoHandler";
+import newMatchHandler from "./handlers/newMatchHandler";
+import resetMatchHandler from "./handlers/resetMatchhandler";
+import quitMatchHandler from "./handlers/quitMatchHandler";
+import playBinHandler from "./handlers/playBinHandler";
+import matchStateHandler from "./handlers/matchStateHandler";
+import adminInfoHandler from "./handlers/adminInfoHandler";
 
 console.log("Loading index function");
 

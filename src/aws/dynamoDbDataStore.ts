@@ -3,7 +3,7 @@ import AWS = require("aws-sdk");
 
 const TABLE_NAME = "kalah-matches";
 
-export class DynamoDbDataStore implements IDataStore
+export default class DynamoDbDataStore implements IDataStore
 {
     private dynamoDb = new AWS.DynamoDB.DocumentClient();
 
