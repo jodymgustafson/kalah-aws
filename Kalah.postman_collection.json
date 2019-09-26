@@ -1,0 +1,154 @@
+{
+	"info": {
+		"_postman_id": "107c6265-d291-4889-a3b9-df1d4164d30f",
+		"name": "Kalah",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "New Match",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://{{kalah-server}}.amazonaws.com/dev/match/new/5",
+					"protocol": "https",
+					"host": [
+						"{{kalah-server}}",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"match",
+						"new",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get State",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{kalah-server}}.amazonaws.com/dev/match/{{matchId}}/state",
+					"protocol": "https",
+					"host": [
+						"{{kalah-server}}",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"match",
+						"{{matchId}}",
+						"state"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Play Bin",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://{{kalah-server}}.amazonaws.com/dev/match/{{matchId}}/play/5",
+					"protocol": "https",
+					"host": [
+						"{{kalah-server}}",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"match",
+						"{{matchId}}",
+						"play",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Quit Match",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://{{kalah-server}}.amazonaws.com/dev/match/{{matchId}}/quit",
+					"protocol": "https",
+					"host": [
+						"{{kalah-server}}",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"match",
+						"{{matchId}}",
+						"quit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset Match",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://{{kalah-server}}.amazonaws.com/dev/match/{{matchId}}/reset",
+					"protocol": "https",
+					"host": [
+						"{{kalah-server}}",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"match",
+						"{{matchId}}",
+						"reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Info",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "PsQmfsHaCo2sGRnMdXn2X5NCTrTMPFQe5FlOWT8r",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{kalah-server}}.amazonaws.com/dev/admin/info",
+					"protocol": "https",
+					"host": [
+						"{{kalah-server}}",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"admin",
+						"info"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
