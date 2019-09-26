@@ -38,6 +38,8 @@ paths:
         required: true
         schema:
           type: integer
+          minimum: 3
+          maximum: 6
       responses:
         201:
           description: Created
@@ -134,6 +136,9 @@ paths:
               schema:
                 type: object
                 properties:
+                  version:
+                    type: string
+                    description: Version of the API
                   openMatches:
                     type: integer
                     description: Number of open matches

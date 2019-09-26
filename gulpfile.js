@@ -5,10 +5,18 @@ const rename = require('gulp-rename');
 const zip = require('gulp-zip');
 const aws = require("aws-sdk");
 const fs = require('fs');
+var replace = require('gulp-replace');
+
+const version = getVersion();
+function getVersion() {
+    let d = new Date;
+    const dayOfYear = (Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(d.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000;
+    return `${d.getFullYear()}.${dayOfYear}.${d.getHours() * 60 + d.getMinutes()}`;
+}
 
 const cleanDist = gulp.series(() => deleteFiles("./dist/**"));
 
-const copyNewMatchEventHandlerFiles = gulp.parallel(
+const copyFilesToDist = gulp.parallel(
     () => copyFiles("src/aws/*.js", "dist/kalah/aws/"),
     () => copyFiles("src/handlers/*.js", "dist/kalah/handlers/"),
     () => copyFiles("src/util/*.js", "dist/kalah/util/"),
@@ -16,7 +24,7 @@ const copyNewMatchEventHandlerFiles = gulp.parallel(
     () => copyFiles("src/*.js", "dist/kalah/"),
 );
 
-function zipNewMatchEventHandler() {
+function zipLambda() {
     return gulp
         .src("./dist/kalah/**", {nodir:true})
         .pipe(zip("kalah-api-lambda.zip"))
@@ -77,10 +85,17 @@ function deleteFiles(files) {
         .pipe(clean());
 }
 
-const packageNewMatch = gulp.series(cleanDist, copyNewMatchEventHandlerFiles, zipNewMatchEventHandler);
+function writeVersion() {
+    return gulp.src('./src/version.js')
+        .pipe(replace('{version}', version))
+        .pipe(gulp.dest('./src/'));    
+}
+
+const packageNewMatch = gulp.series(cleanDist, writeVersion, copyFilesToDist, zipLambda);
 
 exports.default = gulp.series(packageNewMatch);
 exports.cleanDist = cleanDist;
-exports.copyNewMatchEventHandlerFiles = copyNewMatchEventHandlerFiles;
-exports.zipNewMatchEventHandler = zipNewMatchEventHandler;
+exports.copyNewMatchEventHandlerFiles = copyFilesToDist;
+exports.zipNewMatchEventHandler = zipLambda;
 exports.deploy = deployLambda;
+exports.writeVersion = writeVersion;

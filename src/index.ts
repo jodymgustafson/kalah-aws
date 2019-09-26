@@ -5,8 +5,9 @@ import quitMatchHandler from "./handlers/quitMatchHandler";
 import playBinHandler from "./handlers/playBinHandler";
 import matchStateHandler from "./handlers/matchStateHandler";
 import adminInfoHandler from "./handlers/adminInfoHandler";
+import version from "./version";
 
-console.log("Loading index function");
+console.log("Loading index function v" + version);
 
 exports.handler = async (event: APIGatewayEvent, context: Context): Promise<APIGatewayProxyResult> =>
 {
