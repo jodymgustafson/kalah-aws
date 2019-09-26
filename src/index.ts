@@ -38,7 +38,10 @@ exports.handler = async (event: APIGatewayEvent, context: Context): Promise<APIG
             throw new Error("Unknown resource: " + event.resource);
     }
 
+    const start = Date.now();
     console.log("Calling handler: ", handler.name);
-    return handler(event, context);
+    const result = await handler(event, context);
+    console.log(`Handler finished in ${Date.now() - start}ms: ${handler.name}`);
+    return result;
 };
 
