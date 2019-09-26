@@ -9,6 +9,9 @@ export default async function playBinHandler(event: APIGatewayEvent, context: Co
     const bin = parseInt(event.pathParameters["bin"]);
     console.log("Match id: ", matchId);
     console.log("bin: ", bin);
+    if (!Number.isFinite(bin) || bin < 0 || bin > 5) {
+        return failure("Bin must be a number from 0 and 5")
+    }
 
     let errorMessage = "";
     const repo = new MatchRepository(new DynamoDbDataStore());
