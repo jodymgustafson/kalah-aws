@@ -57,7 +57,7 @@ paths:
                     description: Date that the match expires
   /match/{matchId}/reset:
     put:
-      summary: Resets a match
+      summary: Resets the game state
       parameters:
       - name: matchId
         in: path
@@ -108,7 +108,7 @@ paths:
                 $ref: '#/components/schemas/GameState'
   /match/{matchId}/state:
     get:
-      summary: Gets the current state of the match
+      summary: Gets the current state of the game
       parameters:
       - name: matchId
         in: path
