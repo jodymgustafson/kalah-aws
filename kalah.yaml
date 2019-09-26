@@ -1,0 +1,146 @@
+openapi: 3.0.0
+info:
+  title: Kalah API
+  description: API for Kalah game
+  version: 0.1.0
+
+components:
+  schemas:
+    GameState:
+      properties:
+        player:
+          type: integer
+        board:
+          type: array
+          minItems: 2
+          maxItems: 2
+          items: 
+            type: array
+            minItems: 6
+            maxItems: 6
+            items:
+              type: integer
+        score1:
+          type: integer
+        score2:
+          type: integer
+        gameOver:
+          type: boolean
+    
+paths:
+  /match/new/{count}:
+    post:
+      summary: Creates a new match
+      parameters:
+      - name: count
+        in: path
+        description: Number of seeds per bin
+        required: true
+        schema:
+          type: integer
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  matchId:
+                    type: string
+                    description: Match identifier
+                  seedCount:
+                    type: number
+                    description: Number of seeds per bin
+                  expires:
+                    type: string
+                    description: Date that the match expires
+  /match/{matchId}/reset:
+    put:
+      summary: Resets a match
+      parameters:
+      - name: matchId
+        in: path
+        description: Match id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+  /match/{matchId}/quit:
+    put:
+      summary: Quits a match and cleans up resources
+      parameters:
+      - name: matchId
+        in: path
+        description: Match id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+  /match/{matchId}/play/{bin}:
+    put:
+      summary: Plays a bin for the current player
+      parameters:
+      - name: matchId
+        in: path
+        description: Match id
+        required: true
+        schema:
+          type: string
+      - name: bin
+        in: path
+        description: Bin number (0 to 5)
+        required: true
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 5
+      responses:
+        200:
+          description: Game state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameState'
+  /match/{matchId}/state:
+    get:
+      summary: Gets the current state of the match
+      parameters:
+      - name: matchId
+        in: path
+        description: Match id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: "Game state"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameState'
+  /admin/info:
+    get:
+      summary: Gets info about the API
+      responses:
+        200:
+          description: API Info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  openMatches:
+                    type: integer
+                    description: Number of open matches
+                  totalMatches:
+                    type: integer
+                    description: Total number of matches played
+                  abandonedMatches:
+                    type: integer
+                    description: Total number of matches abandoned
+                
