@@ -14,7 +14,9 @@ function getVersion() {
     return `${d.getFullYear()}.${dayOfYear}.${d.getHours() * 60 + d.getMinutes()}`;
 }
 
-const cleanDist = gulp.series(() => deleteFiles("./dist/**"));
+function cleanDist() {
+    return deleteFiles("./dist/**");
+}
 
 const copyFilesToDist = gulp.parallel(
     () => copyFiles("src/aws/*.js", "dist/kalah/aws/"),
@@ -70,7 +72,8 @@ function copyFiles(files, toFolder) {
         files = [files];
     }
     console.log("Copying files to " + toFolder)
-    return gulp.src(files)
+    return gulp
+        .src(files)
         .pipe(debug())
         .pipe(gulp.dest(toFolder));
 }
@@ -80,20 +83,21 @@ function deleteFiles(files) {
         files = [files];
     }
     console.log("Deleting files ", files);
-    return gulp.src(files, {read:false, nodir:true})
+    return gulp
+        .src(files, {read:false, nodir:true})
         .pipe(debug())
         .pipe(clean());
 }
 
 function writeVersion() {
-    return gulp.src('./src/version.js')
+    return gulp
+        .src('./src/version.js')
         .pipe(replace('{version}', version))
         .pipe(gulp.dest('./src/'));    
 }
 
-const packageNewMatch = gulp.series(cleanDist, writeVersion, copyFilesToDist, zipLambda);
+exports.default = gulp.series(cleanDist, writeVersion, copyFilesToDist, zipLambda);
 
-exports.default = gulp.series(packageNewMatch);
 exports.cleanDist = cleanDist;
 exports.copyNewMatchEventHandlerFiles = copyFilesToDist;
 exports.zipNewMatchEventHandler = zipLambda;
