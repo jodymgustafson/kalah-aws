@@ -9,34 +9,24 @@ import version from "./version";
 
 console.log("Loading index function v" + version);
 
+type APIGatewayEventHandler = (event: APIGatewayEvent, context: Context) => Promise<APIGatewayProxyResult>;
+
+const handlerMap = new Map<string, APIGatewayEventHandler>([
+    ["/match/new/{count}", newMatchHandler],
+    ["/match/{matchId}/reset", resetMatchHandler],
+    ["/match/{matchId}/quit", quitMatchHandler],
+    ["/match/{matchId}/play/{bin}", playBinHandler],
+    ["/match/{matchId}/state", matchStateHandler],
+    ["/admin/info", adminInfoHandler]
+]);
+
 exports.handler = async (event: APIGatewayEvent, context: Context): Promise<APIGatewayProxyResult> =>
 {
     console.log("Handling request for: " + event.path);
     
-    let handler: (event: APIGatewayEvent, context: Context) => Promise<APIGatewayProxyResult>;
-
-    switch (event.resource)
-    {
-        case "/match/new/{count}":
-            handler = newMatchHandler;
-            break;
-        case "/match/{matchId}/reset":
-            handler = resetMatchHandler;
-            break;
-        case "/match/{matchId}/quit":
-            handler = quitMatchHandler;
-            break;
-        case "/match/{matchId}/play/{bin}":
-            handler = playBinHandler;
-            break;
-        case "/match/{matchId}/state":
-            handler = matchStateHandler;
-            break;
-        case "/admin/info":
-            handler = adminInfoHandler;
-            break;
-        default:
-            throw new Error("Unknown resource: " + event.resource);
+    let handler = handlerMap.get(event.resource);
+    if (!handler) {
+        throw new Error("Unknown resource: " + event.resource);
     }
 
     const start = Date.now();
@@ -45,4 +35,3 @@ exports.handler = async (event: APIGatewayEvent, context: Context): Promise<APIG
     console.log(`Handler finished in ${Date.now() - start}ms: ${handler.name}`);
     return result;
 };
-
