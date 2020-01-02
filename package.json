@@ -1,0 +1,36 @@
+{
+  "name": "kalah-aws",
+  "version": "1.0.0",
+  "description": "API for Kalah written in AWS lambda to allow two people to play over the internet.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "aws-lambda": "^1.0.4",
+    "aws-sdk": "^2.597.0",
+    "gulp": "^4.0.2",
+    "gulp-clean": "^0.4.0",
+    "gulp-debug": "^4.0.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-zip": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.39",
+    "@types/node": "^13.1.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jodymgustafson/kalah-aws.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jodymgustafson/kalah-aws/issues"
+  },
+  "homepage": "https://github.com/jodymgustafson/kalah-aws#readme"
+}
