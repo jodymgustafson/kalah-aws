@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "aws-lambda": "^1.0.5",
-    "aws-sdk": "^2.597.0",
+    "aws-sdk": "^2.814.0",
     "gulp": "^4.0.2",
     "gulp-clean": "^0.4.0",
     "gulp-debug": "^4.0.0",
